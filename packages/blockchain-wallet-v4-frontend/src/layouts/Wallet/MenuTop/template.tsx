@@ -86,11 +86,13 @@ const Header = (props: OwnProps) => {
 
   return (
     <Navbar
-      primaryNavItems={PrimaryNavItems}
       fabClickHandler={fabCallback}
-      nftsEnabled={props.nftsEnabled}
+      isReferralAvailable={props.isReferralAvailable}
+      isReferralRetrievalEnabled={props.featureFlags.isReferralRetrievalEnabled}
       limitsClickHandler={limitsCallback}
       logoutClickHandler={logoutCallback}
+      nftsEnabled={props.nftsEnabled}
+      primaryNavItems={PrimaryNavItems}
       receiveClickHandler={receiveCallback}
       refreshClickHandler={refreshCallback}
       sendClickHandler={sendCallback}

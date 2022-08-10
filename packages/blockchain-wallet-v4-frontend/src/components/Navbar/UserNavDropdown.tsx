@@ -10,16 +10,13 @@ import { DropdownMenu, DropdownMenuArrow, DropdownMenuItem } from './Dropdown'
 import { DropdownNavLink, NavButton } from './Navbar'
 
 export const userNavItems = ({
+  isReferralAvailable,
+  isReferralRetrievalEnabled,
   limitsClickHandler,
   logoutClickHandler,
   taxCenterClickHandler,
   trackEventCallback
-}: {
-  limitsClickHandler: () => void
-  logoutClickHandler: () => void
-  taxCenterClickHandler: () => void
-  trackEventCallback: (s: string) => void
-}) => [
+}: Props) => [
   {
     clickHandler: () => {
       trackEventCallback('General')
@@ -62,6 +59,17 @@ export const userNavItems = ({
     to: '/settings/addresses'
   },
   {
+    clickHandler: () => {
+      trackEventCallback('Referral')
+    },
+    copy: (
+      <FormattedMessage id='layouts.wallet.header.referafriend' defaultMessage='Refer a Friend' />
+    ),
+    'data-e2e': 'settings_walletsLink',
+    isHidden: !(isReferralAvailable && isReferralRetrievalEnabled),
+    to: '/referral'
+  },
+  {
     clickHandler: taxCenterClickHandler,
     copy: <FormattedMessage id='navbar.tax' defaultMessage='Tax Center' />,
     'data-e2e': 'tax_CenterLink'
@@ -91,7 +99,8 @@ const UserNavDropdown: React.FC<Props> = (props) => {
         <DropdownMenu ref={ref}>
           <DropdownMenuArrow />
           {userNavItems({ ...props }).map(
-            ({ clickHandler = () => {}, copy, 'data-e2e': e2e, to }) => {
+            ({ clickHandler = () => {}, copy, 'data-e2e': e2e, isHidden = false, to }) => {
+              if (isHidden) return
               if (!to) {
                 return (
                   <DropdownMenuItem key={e2e} onClick={clickHandler} data-e2e={e2e}>
@@ -115,6 +124,8 @@ const UserNavDropdown: React.FC<Props> = (props) => {
 }
 
 type Props = {
+  isReferralAvailable?: boolean
+  isReferralRetrievalEnabled?: boolean
   limitsClickHandler: () => void
   logoutClickHandler: () => void
   taxCenterClickHandler: () => void
