@@ -158,3 +158,7 @@ export const getSecureEmailSmsUpdate = (state: RootState) =>
 // dex feature flag
 export const getDexProductEnabled = (state: RootState) =>
   getWebOptions(state).map(path(['featureFlags', 'dex']))
+
+// new send flow
+export const getNewSendFlowEnabled = (state: RootState) =>
+  getWebOptions(state).map(path(['featureFlags', 'newSendFlow']))
